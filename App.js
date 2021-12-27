@@ -1,26 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function App() {
-  const [name, setName] = useState("......");
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
 
-  const handelChange = () => {
-    setName("Azisha");
+  const handelChange = (e) => {
+    value = e.target.value;
+    
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.question}>
-        <Text style={styles.text}>Hello Zia, What is your girlfriend name?</Text>
-      </View>
-      <View style={styles.answer}>
-        <Text style={styles.text}>Her name is {name}</Text>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button title="Answer" onPress={handelChange}  />
-      </View>
-      <StatusBar style="auto" />
+      <Text>Enter Name:</Text>
+      <TextInput style={styles.input}
+        multiline
+        placeholder='e.g. Joynal'
+        name='name'
+        onChangeText={(val) => setName(val)} />
+      <Text>Enter Age:</Text>
+      <TextInput style={styles.input}
+        keyboardType='numeric'
+        placeholder='e.g. 18'
+        name='age'
+        onChangeText={(val) => setAge(val)} />
+      <Text>Name: {name}, Age: {age}</Text>
     </View>
   );
 }
@@ -32,19 +37,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  question: {
-    backgroundColor: 'blue',
-    padding:20,
+  input: {
+    borderWidth:2,
+    backgroundColor: '#777',
+    padding: 8,
+    margin: 10,
+    width: 200,
+    color:'white'
   },
   text: {
     fontWeight:'bold',
     color:'white',
   },
-  answer: {
-    marginTop:20,
-    padding:20,
-    backgroundColor:'green',
-  },
+  
   buttonContainer: {
     marginTop:20,
   }
