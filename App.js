@@ -4,6 +4,9 @@ import {
   Text,
   FlatList,
   View,
+  Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import AddTodoForm from './components/AddTodoForm';
 import Header from './components/header';
@@ -11,9 +14,6 @@ import TodoItem from './components/TodoItem';
 
 export default function App() {
   const [todos, setTodos] = useState([
-    { text: "a", key: 1 },
-    { text: "b", key: 2 },
-    { text: "c", key: 3 }
   ])
 
   const pressHandler = (key) => {
@@ -23,32 +23,42 @@ export default function App() {
   }
 
   const submitHandler = (text) => {
-    setTodos(
+    if (text.length > 5) {
+      setTodos(
       [{
         text: text, key: Math.random().toString()
       },...todos])
+    }
+    else {
+      Alert.alert("OPPS!", "Todos must be 5 character long", [
+        { text: "Understand", onPress: () => console.log('alert closed')}
+      ])
+    }
+    
   }
 
 
   return (
-    <View style={styles.container}>
-      {/*Header*/}
-      <Header />
-      <View style={styles.content}>
-        <AddTodoForm submitHandler={submitHandler}/>
-        {/*To do*/}
-          <View style={styles.list}>
-          {/*List*/}
-            <FlatList
-            data={todos}
-            renderItem={({ item }) => (
-              <TodoItem item={item} pressHandler={pressHandler}/>
-              )}
-            />
-          
-          </View>
+    <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
+      <View style={styles.container}>
+        {/*Header*/}
+        <Header />
+        <View style={styles.content}>
+            {/*To do form*/}
+            <AddTodoForm submitHandler={submitHandler}/>
+            <View style={styles.list}>
+            {/*List*/}
+              <FlatList
+              data={todos}
+              renderItem={({ item }) => (
+                <TodoItem item={item} pressHandler={pressHandler}/>
+                )}
+              />
+            
+            </View>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
