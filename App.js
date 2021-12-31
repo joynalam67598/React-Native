@@ -1,48 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import {
-  Button,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   FlatList,
   View,
-  TouchableOpacity
 } from 'react-native';
+import AddTodoForm from './components/AddTodoForm';
+import Header from './components/header';
+import TodoItem from './components/TodoItem';
 
 export default function App() {
-  const [students, setStudents] = useState([
-    { name: "Joynal", roll: "C173050" },
-    { name: "Zia", roll: "C173055" },
-    { name: "Aziz", roll: "C173064" },
-    { name: "Turan", roll: "C173065" },
-    { name: "Tareq", roll: "C173069" },
-    { name: "Riyad", roll: "C173072" },
-    { name: "Jahid", roll: "C173061" },
-    { name: "Habib", roll: "C173078" },
+  const [todos, setTodos] = useState([
+    { text: "a", key: 1 },
+    { text: "b", key: 2 },
+    { text: "c", key: 3 }
   ])
 
-  const handelPress = (roll) => {
-    setStudents((prevStudents) =>
-       prevStudents.filter(student => student.roll != roll)
-    )
+  const pressHandler = (key) => {
+    setTodos(prevTodos => {
+      return prevTodos.filter(todo => todo.key != key);
+    })
   }
+
+  const submitHandler = (text) => {
+    setTodos(
+      [{
+        text: text, key: Math.random().toString()
+      },...todos])
+  }
+
 
   return (
     <View style={styles.container}>
-      <FlatList
-        keyExtractor={item => item.roll}
-        numColumns={2}
-        data={students}
-        renderItem={({ item }) =>
-          <TouchableOpacity onPress={()=> handelPress(item.roll)}>
-            <Text style={styles.item}>{item.name}</Text>
-          </TouchableOpacity>
-        }
-      
-      />
-      
+      {/*Header*/}
+      <Header />
+      <View style={styles.content}>
+        <AddTodoForm submitHandler={submitHandler}/>
+        {/*To do*/}
+          <View style={styles.list}>
+          {/*List*/}
+            <FlatList
+            data={todos}
+            renderItem={({ item }) => (
+              <TodoItem item={item} pressHandler={pressHandler}/>
+              )}
+            />
+          
+          </View>
+      </View>
     </View>
   );
 }
@@ -51,15 +56,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop:40,
-    paddingHorizontal:20
   },
-  item: {
-    marginTop: 20,
-    padding:30,
-    fontWeight: 'bold',
-    fontSize:24,
-    backgroundColor: "pink",
-    marginHorizontal:10
+  content: {
+    padding:40,
   },
+  list: {
+    marginTop:20
+  }
+  
 });
