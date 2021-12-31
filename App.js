@@ -1,31 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function App() {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-
-  const handelChange = (e) => {
-    value = e.target.value;
-    
-  }
+  const [students, setStudents] = useState([
+    { name: "Joynal", roll: "C173050" },
+    { name: "Zia", roll: "C173055" },
+    { name: "Aziz", roll: "C173064" },
+    { name: "Turan", roll: "C173065" },
+    { name: "Tareq", roll: "C173069" },
+    { name: "Riyad", roll: "C173072" },
+    { name: "Jahid", roll: "C173061" },
+    { name: "Habib", roll: "C173078" },
+  ])
 
   return (
     <View style={styles.container}>
-      <Text>Enter Name:</Text>
-      <TextInput style={styles.input}
-        multiline
-        placeholder='e.g. Joynal'
-        name='name'
-        onChangeText={(val) => setName(val)} />
-      <Text>Enter Age:</Text>
-      <TextInput style={styles.input}
-        keyboardType='numeric'
-        placeholder='e.g. 18'
-        name='age'
-        onChangeText={(val) => setAge(val)} />
-      <Text>Name: {name}, Age: {age}</Text>
+      <ScrollView>
+        {
+          students.map(item => (
+            <View key={item.roll}>
+              <Text style={styles.item}>{item.name}</Text>
+            </View>
+          ))
+        }
+      </ScrollView>
     </View>
   );
 }
@@ -34,23 +33,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop:40,
+    paddingHorizontal:20
   },
-  input: {
-    borderWidth:2,
-    backgroundColor: '#777',
-    padding: 8,
-    margin: 10,
-    width: 200,
-    color:'white'
+  item: {
+    marginTop: 20,
+    padding:30,
+    fontWeight: 'bold',
+    fontSize:24,
+    backgroundColor:"pink"
   },
-  text: {
-    fontWeight:'bold',
-    color:'white',
-  },
-  
-  buttonContainer: {
-    marginTop:20,
-  }
 });
