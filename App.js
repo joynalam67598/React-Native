@@ -1,6 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput,FlatList, View } from 'react-native';
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  FlatList,
+  View,
+  TouchableOpacity
+} from 'react-native';
 
 export default function App() {
   const [students, setStudents] = useState([
@@ -14,14 +23,22 @@ export default function App() {
     { name: "Habib", roll: "C173078" },
   ])
 
+  const handelPress = (roll) => {
+    setStudents((prevStudents) =>
+       prevStudents.filter(student => student.roll != roll)
+    )
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
         keyExtractor={item => item.roll}
         numColumns={2}
         data={students}
-        renderItem={({ item })=>
-           <Text style={styles.item}>{item.name}</Text>
+        renderItem={({ item }) =>
+          <TouchableOpacity onPress={()=> handelPress(item.roll)}>
+            <Text style={styles.item}>{item.name}</Text>
+          </TouchableOpacity>
         }
       
       />
