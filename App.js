@@ -6,10 +6,11 @@ import {
   View,
   Alert,
   Keyboard,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback, 
 } from 'react-native';
 import AddTodoForm from './components/AddTodoForm';
 import Header from './components/header';
+import SandBox from './components/SandBox';
 import TodoItem from './components/TodoItem';
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
 
 
   return (
+    // <SandBox></SandBox>
     <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
       <View style={styles.container}>
         {/*Header*/}
@@ -68,10 +70,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding:40,
+    padding: 40,
+    flex:1
   },
   list: {
-    marginTop:20
+    flex:1,
+    marginTop: 20,
+    
   }
   
 });
