@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from "react-native";
 export default function Home() {
     return (
         <View style={styles.container}>
-            <Text>Home screen</Text>
+            <Text style={styles.textTitle}>Home screen</Text>
         </View>
     )
 }
@@ -12,5 +12,9 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         padding:24,
+    },
+    textTitle: {
+        fontFamily: 'nunito-bold',
+        fontSize:24,
     }
 });
